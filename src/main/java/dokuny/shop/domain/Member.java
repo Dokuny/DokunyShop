@@ -1,5 +1,6 @@
 package dokuny.shop.domain;
 
+import dokuny.shop.utils.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Member {
     @Column
     private String phoneNum;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder

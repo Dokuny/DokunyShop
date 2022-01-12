@@ -4,6 +4,8 @@ import dokuny.shop.domain.Member;
 import dokuny.shop.dto.MemberFormDto;
 import dokuny.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,9 +16,12 @@ import javax.transaction.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     public Long joinMember(MemberFormDto dto) {
+        dto.setPw(passwordEncoder.encode(dto.getPw()));
+
         Member member = dto.toEntity();
 
         Member saveMember = memberRepository.save(member);

@@ -40,7 +40,9 @@ public class MemberFormDto {
                 .pw(pw)
                 .phoneNum(phoneNum)
                 .name(name)
-                .role(Role.UNAUTH_MEMBER)
+                .role(Role.MEMBER)
                 .build();
     }
+
+
 }

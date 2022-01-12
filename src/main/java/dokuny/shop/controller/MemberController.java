@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -28,25 +30,30 @@ public class MemberController {
 
     @PostMapping("/auth/join")
     public String join(Model model, @ModelAttribute("dto") @Validated MemberFormDto dto, BindingResult br) {
-        System.out.println(dto.getPw());
-        System.out.println(dto.getPwCheck());
-
         if (br.hasErrors()) {
-            model.addAttribute("dto",dto);
+            model.addAttribute("dto", dto);
             System.out.println("1번 에러");
             return "auth/join";
         }
 
-        joinFormValidator.validate(dto,br);
+        joinFormValidator.validate(dto, br);
 
         if (br.hasErrors()) {
-            model.addAttribute("dto",dto);
+            model.addAttribute("dto", dto);
             System.out.println("2번 에러");
             return "auth/join";
         }
 
         Long memberId = memberService.joinMember(dto);
 
-        return "redirect:/";
+        return "redirect:/auth/login";
     }
+
+    @GetMapping("/auth/login")
+    public String loginForm() {
+        return "auth/login";
+    }
+
+
+
 }
