@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	
+	<th:block layout:fragment="content">
+		<div class="container">
+			<form th:object="${dto}" th:action method="post">
+				<fieldset>
+					<legend style="text-align: center">회원가입</legend>
+					
+					<div class="form-group">
+						<label class="form-label mt-4">Email address</label>
+						<input type="email" class="form-control" th:field="*{email}" aria-describedby="emailHelp"
+						       placeholder="이메일을 입력해주세요.">
+						<small class="form-text" style="color: red" th:errors="*{email}">에러</small>
+					</div>
+					
+					<div class="form-group">
+						<label class="form-label mt-4">Password</label>
+						<!--						여기 밑에 field 로 pw 설정해주니까 자꾸 null 값들어가고 에러난다.  -->
+						<input type="password" class="form-control" id="pw" name="pw"
+						       placeholder="비밀번호는 영문자와 숫자,특수기호가 적어도 1개 이상 포함된 8~20자 비밀번호여야 합니다.">
+						<small class="form-text" style="color: red" th:errors="*{pw}">에러</small>
+						
+						<label class="form-label mt-4">Password Check</label>
+						<input type="password" class="form-control" th:field="*{pwCheck}"
+						       placeholder="비밀번호를 다시 한번 입력해주세요.">
+						<small class="form-text" style="color: red" th:errors="*{pwCheck}">에러</small>
+					</div>
+					
+					<div class="form-group">
+						<label class="form-label mt-4">Name</label>
+						<input type="text" class="form-control" th:field="*{name}" placeholder="이름을 입력해주세요">
+						<small class="form-text " style="color: red" th:errors="*{name}">에러</small>
+					</div>
+					
+					<div class="form-group">
+						<label class="form-label mt-4">Phone Number</label>
+						<input type="tel" class="form-control" th:field="*{phoneNum}" placeholder="전화번호를 입력해주세요">
+						<small class="form-text" style="color: red" th:errors="*{phoneNum}">에러</small>
+					</div>
+					
+					
+					<button type="submit" class="btn btn-danger" style="margin-top: 30px;margin-bottom: 30px">Submit
+					</button>
+				
+				</fieldset>
+			</form>
+		</div>
+	</th:block>
+
+</html>

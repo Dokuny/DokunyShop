@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<head th:replace="fragments/config :: configFragment"></head>
+	
+	<body>
+		
+		<header th:replace="fragments/header :: headerFragment"></header>
+		
+		<!-- 본문  -->
+		<th:block layout:fragment="content"></th:block>
+		
+		<footer th:replace="fragments/footer :: footerFragment"></footer>
+		
+		
+		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+		
+	</body>
+</html>
