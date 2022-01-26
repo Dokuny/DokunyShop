@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	
+	
+	<th:block layout:fragment="content">
+		<section class="section" id="product">
+			<div class="container main-banner">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="left-images">
+							<img th:each="image:${item.itemImgDtoList}" th:src="${image.imgUrl}" alt="">
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="right-content">
+							<h4 th:text="${item.name}">Item Name</h4>
+							<span th:text="'KRW '+${#numbers.formatInteger(item.price,0,'COMMA')}"
+							      class="price">가격</span>
+							<span th:text="${item.itemDetail}">item detail</span>
+							<!--							<div class="quote">-->
+							<!--								<i class="fa fa-quote-left"></i>-->
+							<!--								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiuski smod.</p>-->
+							<!--							</div>-->
+							<div class="quantity-content">
+								<div class="left-content">
+									<h6>주문 수량</h6>
+								</div>
+								<div class="right-content">
+									<div class="quantity buttons_added">
+										<input type="hidden" id="itemId" name="itemId" th:value="${item.id}">
+										<input type="button" value="-" class="minus">
+										
+										<input type="number" step="1"
+										       min="0" max="100"
+										       id="count"
+										       name="count"
+										       value="0"
+										       title="Qty"
+										       class="input-text qty text count"
+										       size="4" pattern=""
+										       inputmode="">
+										
+										<input type="button" value="+" class="plus">
+									</div>
+								</div>
+							</div>
+							
+							<div style="display: flex; flex-direction: column">
+								<div class="total">
+									<h4 class="total-price">Total: KRW 0</h4>
+								</div>
+								<div class="total" style="margin-top: 10px">
+									<div class="main-border-button" sec:authorize="isAnonymous()">
+										<a href="/auth/login">Order</a>
+										<a href="/auth/login">Add To Cart</a>
+									</div>
+									<div class="main-border-button" sec:authorize="isAuthenticated()">
+										<a href="#" onclick="order()">Order</a>
+										<a href="#" onclick="addToCart()">Add To Cart</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</th:block>
+	
+	<th:block layout:fragment="script2">
+		<script th:inline="javascript">
+			let minusBtn = document.querySelector(".minus");
+			let plusBtn = document.querySelector(".plus");
+			let countInput = document.querySelector(".count");
+			let totalPriceBox = document.querySelector(".total-price");
+			let price = [[${item.price}]]
+			
+			minusBtn.addEventListener('click', function () {
+				if (countInput.value > 0) {
+					countInput.value--;
+					let tp = price * countInput.value;
+					totalPriceBox.textContent = `Total: KRW ${tp.toLocaleString()}`;
+				}
+				
+			});
+			
+			plusBtn.addEventListener('click', function () {
+				countInput.value++;
+				let tp = price * countInput.value;
+				totalPriceBox.textContent = `Total: KRW ${tp.toLocaleString()}`;
+			});
+			
+			countInput.addEventListener('keyup', function () {
+				let tp = price * countInput.value;
+				totalPriceBox.textContent = `Total: KRW ${tp.toLocaleString()}`;
+			})
+			
+			function addToCart() {
+				
+				let token = $("meta[name='_csrf']").attr("content");
+				let header = $("meta[name='_csrf_header']").attr("content");
+				
+				let url = "/cart/add";
+				let paramData = {
+					itemId: $("#itemId").val(),
+					count: $("#count").val()
+				};
+				
+				let param = JSON.stringify(paramData);
+				
+				$.ajax({
+					url: url,
+					type: "POST",
+					contentType: "application/json",
+					data: param,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					dataType: "json",
+					cache: false,
+					success: function (result, status) {
+						alert("장바구니에 추가 되었습니다.");
+						location.href = '/item/' + [[${item.id}]];
+					},
+					error: function (jqXHR, status, error) {
+						alert(jqXHR.responseText);
+					},
+				});
+			}
+			function order() {
+				
+				let token = $("meta[name='_csrf']").attr("content");
+				let header = $("meta[name='_csrf_header']").attr("content");
+				
+				let url = "/order";
+				let paramData = {
+					itemId: $("#itemId").val(),
+					count: $("#count").val()
+				};
+				
+				let param = JSON.stringify(paramData);
+				
+				$.ajax({
+					url: url,
+					type: "POST",
+					contentType: "application/json",
+					data: param,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					dataType: "json",
+					cache: false,
+					success: function (result, status) {
+						alert("구매되었습니다.");
+						location.href = '/orders';
+					},
+					error: function (jqXHR, status, error) {
+						alert(jqXHR.responseText);
+						
+					},
+				});
+			}
+		</script>
+	</th:block>

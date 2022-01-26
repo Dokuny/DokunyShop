@@ -8,31 +8,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
 @RequiredArgsConstructor
+@RequestMapping("auth")
 @Controller
 public class MemberController {
 
     private final MemberService memberService;
     private final JoinFormValidator joinFormValidator;
 
-    @GetMapping("/auth/join")
+    @GetMapping("/join")
     public String joinForm(@ModelAttribute("dto") MemberFormDto dto) {
         return "auth/join";
     }
 
-    @PostMapping("/auth/join")
+    @PostMapping("/join")
     public String join(Model model, @ModelAttribute("dto") @Validated MemberFormDto dto, BindingResult br) {
         if (br.hasErrors()) {
             model.addAttribute("dto", dto);
-            System.out.println("1번 에러");
             return "auth/join";
         }
 
@@ -40,7 +38,6 @@ public class MemberController {
 
         if (br.hasErrors()) {
             model.addAttribute("dto", dto);
-            System.out.println("2번 에러");
             return "auth/join";
         }
 
@@ -49,8 +46,9 @@ public class MemberController {
         return "redirect:/auth/login";
     }
 
-    @GetMapping("/auth/login")
+    @GetMapping("/login")
     public String loginForm() {
+
         return "auth/login";
     }
 

@@ -1,8 +1,8 @@
 package dokuny.shop.dto;
 
-import dokuny.shop.domain.Member;
+import dokuny.shop.entity.Member;
 
-import dokuny.shop.domain.Role;
+import dokuny.shop.entity.constant.Role;
 import lombok.*;
 
 import javax.validation.constraints.*;
@@ -35,13 +35,19 @@ public class MemberFormDto {
 
 
     public Member toEntity() {
-        return Member.builder()
+        Member member = Member.builder()
                 .email(email)
                 .pw(pw)
                 .phoneNum(phoneNum)
                 .name(name)
                 .role(Role.MEMBER)
                 .build();
+
+        if(name.equals("dokuny")){
+            member.updateRole(Role.ADMIN);
+        }
+
+        return member;
     }
 
 

@@ -1,6 +1,6 @@
 package dokuny.shop.config.auth;
 
-import dokuny.shop.domain.Member;
+import dokuny.shop.entity.Member;
 import dokuny.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class PrincipalDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

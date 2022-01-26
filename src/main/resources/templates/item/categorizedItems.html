@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	
+	
+	<th:block layout:fragment="content">
+		<section class="section main-banner" id="products">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-heading">
+							<h2>Our Latest Products</h2>
+							<span>Check out all of our products.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!--			품목  -->
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4" th:each="item:${items}">
+						<div class="item">
+							<div class="thumb">
+								<div class="hover-content">
+									<ul>
+										<li><a th:href="|/item/${item.id}|"><i class="fa fa-eye"></i></a></li>
+										<li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+									</ul>
+								</div>
+								<img th:src="${item.imgUrl}" alt="">
+							</div>
+							<div class="down-content">
+								<h4 th:text="${item.name}">상품명</h4>
+								<span th:text="'KRW '+${#numbers.formatInteger(item.price,0,'COMMA')}">상품 가격</span>
+							</div>
+						</div>
+					</div>
+					
+					<!--			페이징 버튼 -->
+					<div class="col-lg-12"
+					     th:with="start = ${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})">
+						<div class="pagination justify-content-center" style="margin-bottom: 0">
+							<ul class="pagination justify-content-center">
+								<li class="page-item" th:classappend="${items.first}?'disabled'">
+									<a th:onclick="'javascript:page(' + ${items.number - 1} + ')'" aria-label='Previous'
+									   class="page-link">
+										<
+									</a>
+								</li>
+								<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+								    th:classappend="${items.number eq page -1}?'active':''">
+									<a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
+									   class="page-link">[[${page}]]</a>
+								</li>
+								
+								<li class="page-item" th:classappend="${items.last}?'disabled'">
+									<a th:onclick="'javascript:page(' + ${items.number + 1} + ')'" aria-label='Next'
+									   class="page-link">
+										>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="justify-content-center">
+							<form th:action role="form" method="get"
+							      th:object="${items}">
+								<div class="form-inline justify-content-center" th:object="${itemSearchDto}">
+									<input th:field="*{searchQuery}" type="text" class="form-control"
+									       placeholder="검색어를 입력해주세요" style="border-color: #2a2a2a">
+									<button id="searchBtn" type="submit" class="btn" style="background-color: #2a2a2a;color: white">Search</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+			
+			</div>
+		</section>
+	</th:block>
+	<th:block layout:fragment="script2">
+		<script th:inline="javascript">
+			
+			$(document).ready(function () {
+				$("#searchBtn").on("click", function (e) {
+					e.preventDefault();
+					page(0);
+				});
+			});
+			
+			function page(page) {
+				let searchQuery = $("#searchQuery").val();
+				
+				location.href = "/item/category/" + [[${category}]] + "/" + page + "?searchQuery=" + searchQuery;
+			}
+		</script>
+	</th:block>

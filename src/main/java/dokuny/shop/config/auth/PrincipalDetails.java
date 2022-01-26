@@ -10,7 +10,7 @@ package dokuny.shop.config.auth;
 // UserDetails 인터페이스를 구현하면 Authentication에 집어넣을 수 있다.
 // Authentication에 넣어주는 것은 UserDetailsService를 구현한 클래스를 만들어서 처리하면 된다.
 
-import dokuny.shop.domain.Member;
+import dokuny.shop.entity.Member;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
+
 public class PrincipalDetails implements UserDetails {
+
 
     private Member member;  // 콤포지션
 
@@ -35,13 +38,12 @@ public class PrincipalDetails implements UserDetails {
 
         Collection<GrantedAuthority> collect = new ArrayList<>();
 
-        // 권한을 넣어준다. 권한이 여러개라면 여러개 넣어줄 수도 있다.
-        collect.add(new SimpleGrantedAuthority(member.getRole().name()));
+        // 권한을 넣어준다. 권한이 여러개라면 여러개 넣어줄 수도 있다. 여기 넣을 때 String 값이 ROLE_권한명 이래야한다.
+        collect.add(new SimpleGrantedAuthority(member.getRole().getKey()));
 
         return collect;
     }
 
-    //
     @Override
     public String getPassword() {
         return member.getPw();
@@ -52,6 +54,7 @@ public class PrincipalDetails implements UserDetails {
         return member.getEmail();
     }
 
+    // 아래의 녀석들은 기본 값이 다 false로 되어있는데 true로 바꿔두자. 지금 당장 쓸일이 없기 때문, 만약 쓸일이 생기면 로직넣어서 true,false 골라주면 된다.
     @Override
     public boolean isAccountNonExpired() {
         return true;

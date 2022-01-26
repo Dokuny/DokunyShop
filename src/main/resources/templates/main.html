@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+	
+	<th:block layout:fragment="css">
+	
+	</th:block>
+	
+	
+	<th:block layout:fragment="content">
+		<div class="main-banner" id="top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="left-content">
+							<div class="thumb">
+								<div class="inner-content">
+									<h4>NEW ARRIVALS </h4>
+									<span>SPRING & SUMMER SEASON</span>
+									<div class="main-border-button">
+										<a href="#">바로 보기</a>
+									</div>
+								</div>
+								<img src="/images/left-banner-image.jpg" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="right-content">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="right-first-image">
+										<div class="thumb">
+											<div class="inner-content">
+												<h4>Women</h4>
+												<span>Best Clothes For Women</span>
+											</div>
+											<div class="hover-content">
+												<div class="inner">
+													<h4>Women</h4>
+													<p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit
+														incid.</p>
+													<div class="main-border-button">
+														<a href="/item/category/women">Discover More</a>
+													</div>
+												</div>
+											</div>
+											<img src="/images/baner-right-image-01.jpg">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="right-first-image">
+										<div class="thumb">
+											<div class="inner-content">
+												<h4>Men</h4>
+												<span>Best Clothes For Men</span>
+											</div>
+											<div class="hover-content">
+												<div class="inner">
+													<h4>Men</h4>
+													<p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit
+														incid.</p>
+													<div class="main-border-button">
+														<a href="/item/category/men">Discover More</a>
+													</div>
+												</div>
+											</div>
+											<img src="/images/baner-right-image-02.jpg">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="right-first-image">
+										<div class="thumb">
+											<div class="inner-content">
+												<h4>Kids</h4>
+												<span>Best Clothes For Kids</span>
+											</div>
+											<div class="hover-content">
+												<div class="inner">
+													<h4>Kids</h4>
+													<p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit
+														incid.</p>
+													<div class="main-border-button">
+														<a href="/item/category/kids">Discover More</a>
+													</div>
+												</div>
+											</div>
+											<img src="/images/baner-right-image-03.jpg">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="right-first-image">
+										<div class="thumb">
+											<div class="inner-content">
+												<h4>Accessories</h4>
+												<span>Best Trend Accessories</span>
+											</div>
+											<div class="hover-content">
+												<div class="inner">
+													<h4>Accessories</h4>
+													<p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit
+														incid.</p>
+													<div class="main-border-button">
+														<a href="/item/category/accessories">Discover More</a>
+													</div>
+												</div>
+											</div>
+											<img src="/images/baner-right-image-04.jpg">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ***** Main Banner Area End ***** -->
+		
+		<!-- ***** Men Area Starts ***** -->
+		<section class="section" id="men">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="section-heading">
+							<h2>Men's Latest</h2>
+							<span>남성 신상품을 만나보세요.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="men-item-carousel">
+							<div class="owl-men-item owl-carousel">
+								<!--	아이템 슬라이드 배너	 -->
+								<th:block th:each="item : ${men}">
+									<div class="item">
+										<div class="thumb">
+											<div class="hover-content">
+												<ul>
+													<li><a th:href="|/item/${item.id}|"><i class="fa fa-eye"></i></a></li>
+													<li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+												</ul>
+											</div>
+											<img th:src="${item.imgUrl}" alt="">
+										</div>
+										<div class="down-content">
+											<h4 th:text="${item.name}">상품 이름</h4>
+											<span th:text="'KRW '+${#numbers.formatInteger(item.price,0,'COMMA')}">상품 가격</span>
+										</div>
+									</div>
+								</th:block>
+								<!--	아이템 슬라이드 배너 끝		-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ***** Men Area Ends ***** -->
+		
+		<!-- ***** Women Area Starts ***** -->
+		<section class="section" id="women">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="section-heading">
+							<h2>Women's Latest</h2>
+							<span>여성 신상품을 만나보세요.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="women-item-carousel">
+							<div class="owl-women-item owl-carousel">
+								<!--	아이템 슬라이드 배너	 -->
+								<th:block th:each="item : ${women}">
+									<div class="item">
+										<div class="thumb">
+											<div class="hover-content">
+												<ul>
+													<li><a th:href="|/item/${item.id}|"><i class="fa fa-eye"></i></a></li>
+													<li><a href="single-product.html"><i class="fa fa-star"></i></a>
+													</li>
+													<li><a href="single-product.html"><i
+														class="fa fa-shopping-cart"></i></a></li>
+												</ul>
+											</div>
+											<img th:src="${item.imgUrl}" alt="">
+										</div>
+										<div class="down-content">
+											<h4 th:text="${item.name}">상품 이름</h4>
+											<span th:text="'KRW '+${#numbers.formatInteger(item.price,0,'COMMA')}">상품 가격</span>
+										</div>
+									</div>
+								</th:block>
+								<!--	아이템 슬라이드 배너 끝		-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ***** Women Area Ends ***** -->
+		
+		<!-- ***** Kids Area Starts ***** -->
+		<section class="section" id="kids">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="section-heading">
+							<h2>Kid's Latest</h2>
+							<span>아동 신상품을 만나보세요.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="kid-item-carousel">
+							<div class="owl-kid-item owl-carousel">
+								<!--	아이템 슬라이드 배너	 -->
+								<th:block th:each="item : ${kids}">
+									<div class="item">
+										<div class="thumb">
+											<div class="hover-content">
+												<ul>
+													<li><a th:href="|/item/${item.id}|"><i class="fa fa-eye"></i></a></li>
+													<li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+													<li><a href="single-product.html"><i
+														class="fa fa-shopping-cart"></i></a></li>
+												</ul>
+											</div>
+											<img th:src="${item.imgUrl}" alt="">
+										</div>
+										<div class="down-content">
+											<h4 th:text="${item.name}">상품 이름</h4>
+											<span th:text="'KRW '+${#numbers.formatInteger(item.price,0,'COMMA')}">상품 가격</span>
+										</div>
+									</div>
+								</th:block>
+								<!--	아이템 슬라이드 배너 끝		-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ***** Kids Area Ends ***** -->
+	
+	</th:block>
+	
+	<th:block layout:fragment="script2"></th:block>

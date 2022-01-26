@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
-	<head th:replace="fragments/config :: configFragment"></head>
+	<head>
+		<th:block th:replace="fragments/config :: configFragment"></th:block>
+		
+		<th:block layout:fragment="css"></th:block>
+		<th:block layout:fragment="script1"></th:block>
+	</head>
 	
 	<body>
 		
@@ -17,5 +21,7 @@
 		
 		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 		
+		
+		<th:block layout:fragment="script2"></th:block>
 	</body>
 </html>

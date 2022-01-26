@@ -1,10 +1,9 @@
 package dokuny.shop.service;
 
-import dokuny.shop.domain.Member;
+import dokuny.shop.entity.Member;
 import dokuny.shop.dto.MemberFormDto;
 import dokuny.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
